@@ -174,7 +174,7 @@ the appropriate HTTP status code:
 ### PATCH /powers/:id
 
 This route should update an existing `Power`. It should accept an object with
-the following properties in the body of the request:
+the following properties in the body of the request: Lorem
 
 ```json
 {
