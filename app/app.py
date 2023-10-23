@@ -1,3 +1,4 @@
+# Import the necessary modules
 from flask import Flask, make_response, jsonify, request
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
@@ -109,7 +110,7 @@ class UpdatePowerDescription(Resource):
         else:
             return create_response({"errors": ["No description provided"]}, 400)
 
-# Hero Powers route
+# Create a new HeroPower route
 class HeroPowers(Resource):
     def post(self):
         data = request.get_json()
@@ -137,13 +138,22 @@ class HeroPowers(Resource):
         db.session.add(hero_power)
         db.session.commit()
 
-        power_data = {
-            "id": power.id,
-            "name": power.name,
-            "description": power.description
+        # Retrieve the updated Hero data with powers
+        hero_data = {
+            "id": hero.id,
+            "name": hero.name,
+            "super_name": hero.super_name,
+            "powers": [
+                {
+                    "id": p.id,
+                    "name": p.name,
+                    "description": p.description
+                }
+                for p in hero.powers
+            ]
         }
 
-        return create_response(power_data, 201)
+        return create_response(hero_data, 201)
 
 # Register routes
 api.add_resource(Home, '/')
