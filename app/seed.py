@@ -1,5 +1,6 @@
 from app import app
-from models import Power, Hero, hero_powers, db
+from db import db
+from models import Power, Hero, hero_powers
 import random
 
 with app.app_context():
@@ -10,7 +11,8 @@ with app.app_context():
     print("🦸‍♀️ Seeding powers...")
 
     powers_data = [
-        {"name": "super strength", "description": "gives the wielder super-human strengths"},
+        {"name": "super strength", 
+        "description": "gives the wielder super-human strengths"},
         {"name": "flight", "description": "gives the wielder the ability to fly through the skies at supersonic speed"},
         {"name": "super human senses", "description": "allows the wielder to use her senses at a super-human level"},
         {"name": "elasticity", "description": "can stretch the human body to extreme lengths"}

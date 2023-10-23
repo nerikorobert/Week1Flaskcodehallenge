@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 from flask import Flask, make_response, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
-app = Flask(__name)
+from db import db
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+db.init_app(app)
 migrate = Migrate(app, db)
 
 # Define the models (in models.py)
@@ -32,19 +31,7 @@ class Hero(db.Model):
             "powers": [power.to_dict() for power in self.powers]
         }
 
-class Power(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(200))
 
-    heroes = db.relationship('Hero', secondary=hero_powers, back_populates='powers')
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "description": self.description
-        }
 
 @app.route('/')
 def home():

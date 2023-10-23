@@ -1,12 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-
-db = SQLAlchemy()
+from db import db
 
 hero_powers = db.Table(
     "hero_power",
-    db.Column("hero_id", db.ForeignKey("heroes.id"), primary_key=True),
-    db.Column("power_id", db.ForeignKey("powers.id"), primary_key=True),
+    db.Column("hero_id", db.ForeignKey("heroes.id"), ),
+    db.Column("power_id", db.ForeignKey("powers.id"),),
     db.Column("strength", db.String),
     db.Column("created_at", db.DateTime, server_default=db.func.now()),
     db.Column("updated_at", db.DateTime, onupdate=db.func.now())
